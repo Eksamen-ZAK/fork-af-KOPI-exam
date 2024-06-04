@@ -1,4 +1,4 @@
-window.addEventListener("load", startVideo);
+window.addEventListener("load", startVideo());
 // spørger om man må få tilladelse til at bruge deres indbyggede webcam
 async function startVideo() {
   const video = document.getElementById("video");
@@ -9,7 +9,6 @@ async function startVideo() {
     console.error("Error accessing camera: ", err);
   }
 }
-
 document.addEventListener("DOMContentLoaded", function () {
   var video = document.getElementById("background-video");
   var playButton = document.getElementById("play-button");
@@ -21,34 +20,21 @@ document.addEventListener("DOMContentLoaded", function () {
   var h2Con2 = document.querySelector(".con-2 h2");
   var pCon2 = document.querySelector(".con-2 p");
   var closeButton = document.querySelector(".close-v");
-  // liste over objekter / tekst der bliver skiftet ud
-  var videoData = [
-    {
-      src: "../assets/videos/v001.mp4",
-      h1Con1: "Repetition 1",
-      pCon1: "1/5",
-      h2Con2: "Øvelse 1",
-      pCon2: "Løft brynene",
-    },
-    {
-      src: "../assets/videos/v002.mp4",
-      h1Con1: "Repetition 1",
-      pCon1: "2/5",
-      h2Con2: "Øvelse 2",
-      pCon2: "Løft brynene (med hjælp)",
-    },
-    {
-      src: "../assets/videos/v003.mp4",
-      h1Con1: "Repetition 1",
-      pCon1: "3/5",
-      h2Con2: "Øvelse 3",
-      pCon2: "Rynk brynene",
-    },
-  ];
 
-  var currentVideoIndex = 0;
-
-  updateVideoAndText();
+  async function fetchData() {
+    await fetch("https://jlgsxiynwqvvhwheexwo.supabase.co/rest/v1/exercises", {
+      method: "GET",
+      headers: {
+        apikey:
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpsZ3N4aXlud3F2dmh3aGVleHdvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTQ0NzA5MjksImV4cCI6MjAzMDA0NjkyOX0.U40ZZWRh_MC7612vdwFHVKFZxwRHq_TECCnnzovEXKE",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        dataList(data);
+      });
+  }
+  fetchData();
 
   video.pause();
 
@@ -68,30 +54,53 @@ document.addEventListener("DOMContentLoaded", function () {
     pauseButton.style.display = "none";
   });
 
-  forwardButton.addEventListener("click", function () {
-    if (currentVideoIndex < videoData.length - 1) {
-      currentVideoIndex++;
-    } else {
-      currentVideoIndex = 0;
-    }
-    updateVideoAndText();
-  });
+  let programArray = [];
+  let exercisesList = [];
+  let videoData = [];
 
-  backwardButton.addEventListener("click", function () {
-    if (currentVideoIndex > 0) {
-      currentVideoIndex--;
-    } else {
-      currentVideoIndex = videoData.length - 1;
+  function dataList(data) {
+    if (sessionStorage.getItem("program-list")) {
+      exercisesList = JSON.parse(sessionStorage.getItem("program-list"));
+      programArray = exercisesList.map((arr) => arr[0]);
     }
-    updateVideoAndText();
-  });
+    const filteredData = data.filter((item) =>
+      programArray.includes(item.image)
+    );
+    videoData = filteredData.map((data, index) => {
+      const object = {};
+      object.src = `../assets/videos/v${data.image}.mp4`;
+      object.h1Con1 = "Repetition 1";
+      object.pCon1 = `1/5`;
+      object.h2Con2 = `Øvelse ${data.id}`;
+      object.pCon2 = data.title;
+      return object;
+    });
+    updateVideoAndText(videoData, 0);
+  }
 
   closeButton.addEventListener(
     "click",
     () => (window.location.href = "/gemte-programmer")
   );
 
-  function updateVideoAndText() {
+  function updateVideoAndText(videoData, currentVideoIndex) {
+    console.log(videoData);
+    forwardButton.addEventListener("click", function () {
+      if (currentVideoIndex < videoData.length - 1) {
+        currentVideoIndex++;
+      } else {
+        currentVideoIndex = videoData.length - 1;
+      }
+      updateVideoAndText(videoData, currentVideoIndex);
+    });
+    backwardButton.addEventListener("click", function () {
+      if (currentVideoIndex > 0) {
+        currentVideoIndex--;
+      } else {
+        currentVideoIndex = 0;
+      }
+      updateVideoAndText(videoData, currentVideoIndex);
+    });
     var currentVideo = videoData[currentVideoIndex];
     video.src = currentVideo.src;
     h1Con1.textContent = currentVideo.h1Con1;

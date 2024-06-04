@@ -43,6 +43,7 @@ if (userData[0].saved_programs) {
         data.programDescription;
     }
     myClone.querySelector(".edit").setAttribute("id", `edit-${data.programId}`);
+    myClone.querySelector(".play").setAttribute("id", `play-${data.programId}`);
     myClone
       .querySelector(".set-goal")
       .setAttribute("id", `set-goal-${data.programId}`);
@@ -93,6 +94,10 @@ if (userData[0].saved_programs) {
       .getElementById(`play-${data.programId}`)
       .addEventListener("click", () => {
         window.location.href = "/afspil-program";
+        sessionStorage.setItem(
+          "program-list",
+          JSON.stringify(data.programList)
+        );
       });
     parentElement.appendChild(myClone);
   });
