@@ -25,14 +25,14 @@ import ProgramModal from "../components/ProgramModal.astro";
   <main>
     <div>
       <ul class="flex">
-        <li><a href="#Pande">Pande</a></li><li>
+        <li><a href="#Pande">Pande</a></li><li id="eyes">
           <a href="#Øjne">Øjne</a>
-        </li><li>
+        </li><li id="nose">
           <a href="#Næse">Næse</a>
-        </li><li>
+        </li><li id="mouth">
           <a href="#Mund">Mund</a>
         </li>
-        <li>
+        <li id="tongue">
           <a href="#Tunge">Tunge</a>
         </li>
       </ul>
@@ -197,7 +197,6 @@ import ProgramModal from "../components/ProgramModal.astro";
       margin-left: 420px;
       z-index: 2;
       padding-inline-start: 0;
-
       list-style: none;
 
       > li {
@@ -206,11 +205,12 @@ import ProgramModal from "../components/ProgramModal.astro";
         font-weight: 100;
         padding: 15px 0px 10px 0px;
         background-color: var(--alternative-bg-color);
-        color: var(--font-color);
         > a {
           height: 30px;
           padding: 0 40px;
           text-decoration: none;
+          color: var(--font-color);
+          border: 1px solid var(--alternative-bg-color);
         }
 
         > a:visited {
@@ -224,10 +224,23 @@ import ProgramModal from "../components/ProgramModal.astro";
           border: 1px solid var(--primary-color);
         }
       }
+      > li:hover + li > a {
+        border-left: 1px solid var(--alternative-bg-color);
+      }
+
       > li:nth-child(even) > a {
         border: 0 1px;
         border-style: none solid;
         border-color: var(--primary-color);
+      }
+      > li:has(+ #nose:hover) > a {
+        border-right: 1px solid var(--alternative-bg-color);
+      }
+      > li:has(+ #nose:hover) > a {
+        border-right: 1px solid var(--alternative-bg-color);
+      }
+      > li:has(+ #tongue:hover) > a {
+        border-right: 1px solid var(--alternative-bg-color);
       }
     }
 
