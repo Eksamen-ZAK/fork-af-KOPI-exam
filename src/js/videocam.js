@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", function () {
       object.src = `../assets/videos/v${data.image}.mp4`;
       object.h1Con1 = "Repetition 1";
       object.pCon1 = `1/5`;
-      object.h2Con2 = `Øvelse ${data.id}`;
+      object.h2Con2 = `Øvelse ${index + 1}`;
       object.pCon2 = data.title;
       return object;
     });
