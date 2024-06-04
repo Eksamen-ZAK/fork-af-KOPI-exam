@@ -74,9 +74,7 @@ if (programArray.length > 0) {
 document.querySelector(".save").addEventListener("click", () => {
   document.querySelector(".program-modal").showModal();
 });
-document.querySelector(".play").addEventListener("click", () => {
-  window.location.href = "/afspil-program";
-});
+
 // Adding eventListeners to the "Tilføj"-buttons
 // The exercise, that is clicked on, has an id, that is getting pushed into the array "programArray".
 // The fetched data is being filtrered, in order to only show the id's from the array, that is being mapped through
@@ -178,9 +176,14 @@ function mappingProgram(filteredData, programArray, exercisesList) {
       .addEventListener("click", () => addRepitition(exercise.id));
     parentElement.appendChild(myClone);
     return programArray;
+    return exercisesList;
   });
 }
-
+document.querySelector(".play").addEventListener("click", () => {
+  window.location.href = "/afspil-program";
+  sessionStorage.setItem("program-list", JSON.stringify(exercisesList));
+  console.log(exercisesList);
+});
 // Functions that changes the number of repititions for every exercise
 
 let count;
