@@ -66,14 +66,16 @@ document.addEventListener("DOMContentLoaded", function () {
     const filteredData = data.filter((item) =>
       programArray.includes(item.image)
     );
-    videoData = filteredData.map((data, index) => {
-      const object = {};
-      object.src = `../assets/videos/v${data.image}.mp4`;
-      object.h1Con1 = "Repetition 1";
-      object.pCon1 = `1/5`;
-      object.h2Con2 = `Øvelse ${index + 1}`;
-      object.pCon2 = data.title;
-      return object;
+    filteredData.map((data, index) => {
+      for (let i = 0; i < exercisesList[index][1]; i++) {
+        const object = {};
+        object.src = `../assets/videos/v${data.image}.mp4`;
+        object.h1Con1 = "Repetition";
+        object.pCon1 = `${i + 1}/${exercisesList[index][1]}`;
+        object.h2Con2 = `Øvelse ${index + 1}`;
+        object.pCon2 = data.title;
+        videoData.push(object);
+      }
     });
     updateVideoAndText(videoData, 0);
   }
@@ -84,7 +86,6 @@ document.addEventListener("DOMContentLoaded", function () {
   );
 
   function updateVideoAndText(videoData, currentVideoIndex) {
-    console.log(videoData);
     forwardButton.addEventListener("click", function () {
       if (currentVideoIndex < videoData.length - 1) {
         currentVideoIndex++;
