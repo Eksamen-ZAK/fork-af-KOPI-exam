@@ -115,13 +115,15 @@ function addTextToSpeech() {
     }
   });
 
-  let strings = document.querySelectorAll("h1, h2, h3, p, a");
+  let strings = document.querySelectorAll(
+    "h1, h2, h3, p, a, label, input, .read"
+  );
 
   /* strings.forEach((string) => {
   string.addEventListener("click", (e) => {
     msg.text = e.target.innerText;
     window.speechSynthesis.speak(msg);
-
+ 
     let interval = setInterval(() => {
       if (!window.speechSynthesis.speaking) {
         string.style.border = "1px solid black";
@@ -164,7 +166,9 @@ function addTextToSpeech() {
 }
 
 function removeTextToSpeech() {
-  let strings = document.querySelectorAll("h1, h2, h3, p, a");
+  let strings = document.querySelectorAll(
+    "h1, h2, h3, p, a, label, input, .read"
+  );
 
   strings.forEach((string) => {
     string.removeEventListener("click", (e) => {

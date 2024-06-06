@@ -3,7 +3,7 @@
   apikey:
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpsZ3N4aXlud3F2dmh3aGVleHdvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTQ0NzA5MjksImV4cCI6MjAzMDA0NjkyOX0.U40ZZWRh_MC7612vdwFHVKFZxwRHq_TECCnnzovEXKE",
 };
-
+ 
 let response = await fetch(
   "https://jlgsxiynwqvvhwheexwo.supabase.co/rest/v1/exercises",
   {
@@ -11,7 +11,7 @@ let response = await fetch(
     headers: headersList,
   }
 );
-
+ 
 const data = await response.json(); */
 
 import Layout from "../layouts/Layout.astro";
@@ -24,7 +24,10 @@ import "../css/generel.css";
   <main>
     <Menu />
     <div class="fade-img">
-      <img src="/assets/images/bg-til-landing-optimized.webp" alt="person smiler" />
+      <img
+        src="/assets/images/bg-til-landing-optimized.webp"
+        alt="person smiler"
+      />
     </div>
     <form id="person-data" class="form-con">
       <img
@@ -74,14 +77,14 @@ import "../css/generel.css";
           </div>
           <div class="info-lists">
             <ul class="colored-text">
-              <li>Bruger navn:</li>
-              <li>BrugerID:</li>
-              <li>Oprettet:</li>
+              <li class="read">Bruger navn:</li>
+              <li class="read">BrugerID:</li>
+              <li class="read">Oprettet:</li>
             </ul>
             <ul>
-              <li id="user-name"></li>
-              <li id="userID"></li>
-              <li id="accessdate"></li>
+              <li class="read" id="user-name"></li>
+              <li class="read" id="userID"></li>
+              <li class="read" id="accessdate"></li>
             </ul>
           </div>
         </div>
@@ -122,10 +125,11 @@ import "../css/generel.css";
   form {
     display: flex;
     flex-direction: column;
-    gap:48px;
+    gap: 48px;
   }
 
-   h1,h2 {
+  h1,
+  h2 {
     margin-bottom: 6px;
     font-size: var(--fs-m);
     font-family: var(--main-font);
@@ -145,7 +149,7 @@ import "../css/generel.css";
     font-weight: var(--fw-n);
     color: black;
   }
- 
+
   ul {
     display: grid;
     gap: 3.2px;
@@ -205,22 +209,22 @@ import "../css/generel.css";
     }
   }
   .fade-img {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-  z-index: -1;
-}
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    z-index: -1;
+  }
 
-.fade-img > img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: grayscale(1);
-  opacity: 0.5;
-}
+  .fade-img > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(1);
+    opacity: 0.5;
+  }
 
   input {
     padding-left: 12px;
@@ -233,8 +237,7 @@ import "../css/generel.css";
     font-size: var(--fs-s);
   }
 
-
-  .form-con{
+  .form-con {
     margin-left: 30px;
   }
 </style>
